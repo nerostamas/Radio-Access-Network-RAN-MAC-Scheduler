@@ -24,9 +24,7 @@ double blockErrorProbability(Cqi cqi, int attempt) noexcept {
 }  // namespace
 
 Simulator::Simulator(SimConfig config)
-    : config_(config),
-      rng_(config.seed),
-      scheduler_(mac::makeScheduler(config.scheduler)) {
+    : config_(config), rng_(config.seed), scheduler_(mac::makeScheduler(config.scheduler)) {
     ues_.reserve(static_cast<std::size_t>(std::max(1, config_.numUes)));
     // Spread mean CQI across UEs to emulate cell-center vs cell-edge users.
     std::uniform_int_distribution<int> cqiDist(3, 14);
@@ -61,15 +59,14 @@ SimResult Simulator::run() {
 
         double grantedBitsThisTti = 0.0;
         if (decision.granted) {
-            auto it = std::find_if(ues_.begin(), ues_.end(), [&](const auto& ue) {
-                return ue.id() == decision.ueId;
-            });
+            auto it = std::find_if(ues_.begin(), ues_.end(),
+                                   [&](const auto& ue) { return ue.id() == decision.ueId; });
             if (it != ues_.end()) {
                 mac::UserEquipment& ue = *it;
 
                 // L1 link adaptation: size the transport block for this CQI/RB count.
-                const Bits tbs = phy::LinkAdaptation::transportBlockSize(
-                    ue.currentCqi(), config_.resourceBlocks);
+                const Bits tbs = phy::LinkAdaptation::transportBlockSize(ue.currentCqi(),
+                                                                         config_.resourceBlocks);
                 const Bits toSend = std::min(tbs, ue.bufferSize());
 
                 if (toSend > 0) {
@@ -81,8 +78,7 @@ SimResult Simulator::run() {
                     // HARQ feedback loop (resolved within the TTI for simplicity).
                     bool delivered = false;
                     while (true) {
-                        const double bler =
-                            blockErrorProbability(ue.currentCqi(), harq->attempt());
+                        const double bler = blockErrorProbability(ue.currentCqi(), harq->attempt());
                         if (unit(rng_) >= bler) {
                             harq->onAck();
                             delivered = true;
@@ -122,10 +118,9 @@ SimResult Simulator::run() {
     }
     result.cellThroughputMbps = metrics::sum(result.perUeThroughputMbps);
     result.jainsFairness = metrics::jainsFairnessIndex(result.perUeThroughputMbps);
-    result.harqRetxRate =
-        totalTransmissions == 0
-            ? 0.0
-            : static_cast<double>(retransmissions) / static_cast<double>(totalTransmissions);
+    result.harqRetxRate = totalTransmissions == 0 ? 0.0
+                                                  : static_cast<double>(retransmissions) /
+                                                        static_cast<double>(totalTransmissions);
     return result;
 }
 

@@ -13,7 +13,7 @@ namespace ran {
 /// Configuration for a simulation run.
 struct SimConfig {
     int numUes = 10;
-    int resourceBlocks = 50;   ///< RBs in the grid (50 RBs ~ 10 MHz LTE)
+    int resourceBlocks = 50;  ///< RBs in the grid (50 RBs ~ 10 MHz LTE)
     Tti numTtis = 1000;
     unsigned seed = 42;
     mac::SchedulerType scheduler = mac::SchedulerType::ProportionalFair;
@@ -31,7 +31,7 @@ struct SimResult {
 /// L1 link adaptation to size the transport block, applies HARQ feedback, and
 /// accumulates KPIs. This is the glue that ties L1 and L2 together.
 class Simulator {
-public:
+   public:
     explicit Simulator(SimConfig config);
 
     /// Run the full simulation and return aggregated KPIs.
@@ -39,7 +39,7 @@ public:
 
     [[nodiscard]] const SimConfig& config() const noexcept { return config_; }
 
-private:
+   private:
     SimConfig config_;
     std::mt19937 rng_;
     std::vector<mac::UserEquipment> ues_;

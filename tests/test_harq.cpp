@@ -31,8 +31,8 @@ TEST(HarqProcess, NackIncrementsAttemptUntilMax) {
     h.startNewTransmission(1000);
     EXPECT_TRUE(h.onNack());  // attempt -> 2
     EXPECT_EQ(h.attempt(), 2);
-    EXPECT_TRUE(h.onNack());  // attempt -> 3
-    EXPECT_TRUE(h.onNack());  // attempt -> 4
+    EXPECT_TRUE(h.onNack());   // attempt -> 3
+    EXPECT_TRUE(h.onNack());   // attempt -> 4
     EXPECT_FALSE(h.onNack());  // exhausted, dropped
     EXPECT_FALSE(h.busy());
 }

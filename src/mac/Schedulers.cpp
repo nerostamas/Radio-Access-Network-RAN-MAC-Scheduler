@@ -11,7 +11,7 @@ namespace {
 /// Round Robin: cycle through UEs so each gets an equal share of grants,
 /// independent of channel quality. Fair in time, not throughput-optimal.
 class RoundRobinScheduler final : public Scheduler {
-public:
+   public:
     SchedulingDecision schedule(const std::vector<UserEquipment*>& candidates,
                                 int /*resourceBlocks*/) const override {
         if (candidates.empty()) {
@@ -21,8 +21,8 @@ public:
         const UserEquipment* best = nullptr;
         UeId bestKey = 0;
         for (const auto* ue : candidates) {
-            const UeId key = ue->id() > lastServed_ ? ue->id() - lastServed_
-                                                    : ue->id() + kWrap - lastServed_;
+            const UeId key =
+                ue->id() > lastServed_ ? ue->id() - lastServed_ : ue->id() + kWrap - lastServed_;
             if (best == nullptr || key < bestKey) {
                 best = ue;
                 bestKey = key;
@@ -34,7 +34,7 @@ public:
 
     std::string_view name() const noexcept override { return "RoundRobin"; }
 
-private:
+   private:
     static constexpr UeId kWrap = 1u << 24;
     mutable UeId lastServed_ = 0;
 };
@@ -42,7 +42,7 @@ private:
 /// Max C/I: always serve the UE with the best instantaneous channel (CQI),
 /// maximizing cell throughput at the cost of cell-edge fairness.
 class MaxCiScheduler final : public Scheduler {
-public:
+   public:
     SchedulingDecision schedule(const std::vector<UserEquipment*>& candidates,
                                 int /*resourceBlocks*/) const override {
         const UserEquipment* best = nullptr;
@@ -60,7 +60,7 @@ public:
 /// Proportional Fair: serve the UE maximizing achievable-rate / average-rate,
 /// balancing throughput and fairness. The industry-standard baseline.
 class ProportionalFairScheduler final : public Scheduler {
-public:
+   public:
     SchedulingDecision schedule(const std::vector<UserEquipment*>& candidates,
                                 int resourceBlocks) const override {
         const UserEquipment* best = nullptr;

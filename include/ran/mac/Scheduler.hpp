@@ -22,14 +22,14 @@ struct SchedulingDecision {
 /// A scheduler decides, every TTI, which UE receives the shared resource-block
 /// grant. Implementations differ only in the metric they maximize.
 class Scheduler {
-public:
+   public:
     virtual ~Scheduler() = default;
 
     /// Choose a UE to serve this TTI from the `candidates` that have data to send.
     /// @param candidates  UEs with a non-empty buffer and a free HARQ process.
     /// @param resourceBlocks  RBs available in the grid this TTI.
-    [[nodiscard]] virtual SchedulingDecision schedule(
-        const std::vector<UserEquipment*>& candidates, int resourceBlocks) const = 0;
+    [[nodiscard]] virtual SchedulingDecision schedule(const std::vector<UserEquipment*>& candidates,
+                                                      int resourceBlocks) const = 0;
 
     [[nodiscard]] virtual std::string_view name() const noexcept = 0;
 };
