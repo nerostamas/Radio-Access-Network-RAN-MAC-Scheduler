@@ -5,8 +5,7 @@
 
 namespace ran::mac {
 
-UserEquipment::UserEquipment(UeId id, Cqi meanCqi, int harqProcesses,
-                             Bits bufferBits) noexcept
+UserEquipment::UserEquipment(UeId id, Cqi meanCqi, int harqProcesses, Bits bufferBits) noexcept
     : id_(id),
       meanCqi_(std::clamp<Cqi>(meanCqi, kMinCqi, kMaxCqi)),
       currentCqi_(meanCqi_),
@@ -22,8 +21,7 @@ void UserEquipment::updateCqi(std::mt19937& rng) noexcept {
     std::normal_distribution<double> step(0.0, 1.0);
     const double drift = 0.5 * (static_cast<double>(meanCqi_) - currentCqi_);
     double next = static_cast<double>(currentCqi_) + drift + step(rng);
-    next = std::clamp(next, static_cast<double>(kMinCqi),
-                      static_cast<double>(kMaxCqi));
+    next = std::clamp(next, static_cast<double>(kMinCqi), static_cast<double>(kMaxCqi));
     currentCqi_ = static_cast<Cqi>(std::lround(next));
 }
 
@@ -50,8 +48,7 @@ double UserEquipment::averageThroughput(Tti ttiCount) const noexcept {
     return static_cast<double>(deliveredBits_) / seconds;
 }
 
-void UserEquipment::updateEwmaThroughput(double instantBitsPerTti,
-                                         double alpha) noexcept {
+void UserEquipment::updateEwmaThroughput(double instantBitsPerTti, double alpha) noexcept {
     ewmaThroughput_ = (1.0 - alpha) * ewmaThroughput_ + alpha * instantBitsPerTti;
     if (ewmaThroughput_ < 1.0) {
         ewmaThroughput_ = 1.0;  // keep strictly positive for PF division

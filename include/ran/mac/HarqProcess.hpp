@@ -11,9 +11,8 @@ namespace ran::mac {
 /// combining gain, modeled here as an increasing success probability, up to a
 /// maximum number of attempts before the block is dropped.
 class HarqProcess {
-public:
-    explicit HarqProcess(int maxTransmissions = 4) noexcept
-        : maxTransmissions_(maxTransmissions) {}
+   public:
+    explicit HarqProcess(int maxTransmissions = 4) noexcept : maxTransmissions_(maxTransmissions) {}
 
     /// True when the process holds an outstanding (not-yet-ACKed) transport block.
     [[nodiscard]] bool busy() const noexcept { return busy_; }
@@ -36,7 +35,7 @@ public:
     ///         dropped after exhausting `maxTransmissions` (process freed).
     bool onNack() noexcept;
 
-private:
+   private:
     int maxTransmissions_;
     int attempt_ = 0;
     bool busy_ = false;

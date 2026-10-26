@@ -6,8 +6,8 @@ namespace ran::phy {
 
 /// Modulation and Coding Scheme derived from a CQI report.
 struct Mcs {
-    int modulationOrder;    ///< bits per symbol (2=QPSK, 4=16QAM, 6=64QAM, 8=256QAM)
-    double codeRate;        ///< effective channel code rate in (0, 1]
+    int modulationOrder;  ///< bits per symbol (2=QPSK, 4=16QAM, 6=64QAM, 8=256QAM)
+    double codeRate;      ///< effective channel code rate in (0, 1]
 };
 
 /// L1 link adaptation: maps channel quality (CQI) to a modulation & coding
@@ -17,7 +17,7 @@ struct Mcs {
 /// This is a simplified, deterministic model of the 3GPP CQI/MCS/TBS tables.
 /// It is monotonic in CQI, which is the property schedulers rely on.
 class LinkAdaptation {
-public:
+   public:
     /// Modulation + coding scheme selected for a reported CQI.
     static Mcs mcsForCqi(Cqi cqi) noexcept;
 

@@ -14,7 +14,7 @@ namespace ran::mac {
 /// changes every TTI, a downlink buffer of pending data, HARQ processes, and
 /// throughput accumulators.
 class UserEquipment {
-public:
+   public:
     /// @param id   UE identifier.
     /// @param meanCqi  Mean CQI for the random walk channel model.
     /// @param harqProcesses  Number of stop-and-wait HARQ processes.
@@ -62,7 +62,7 @@ public:
 
     void updateEwmaThroughput(double instantBitsPerTti, double alpha = 0.001) noexcept;
 
-private:
+   private:
     UeId id_;
     Cqi meanCqi_;
     Cqi currentCqi_;
