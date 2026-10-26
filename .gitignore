@@ -1,0 +1,13 @@
+build/
+build-*/
+cmake-build-*/
+*.o
+*.obj
+*.gcda
+*.gcno
+*.gcov
+coverage/
+coverage.info
+.cache/
+compile_commands.json
+.DS_Store
