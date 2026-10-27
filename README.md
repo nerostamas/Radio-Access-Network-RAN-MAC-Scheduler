@@ -1,6 +1,6 @@
 # ran-mac-scheduler
 
-[![CI](https://github.com/nerostamas/ran-mac-scheduler/actions/workflows/ci.yml/badge.svg)](https://github.com/nerostamas/ran-mac-scheduler/actions/workflows/ci.yml)
+[![CI](https://github.com/nerostamas/Radio-Access-Network-RAN-MAC-Scheduler/actions/workflows/ci.yml/badge.svg)](https://github.com/nerostamas/Radio-Access-Network-RAN-MAC-Scheduler/actions/workflows/ci.yml)
 [![C++](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://isocpp.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -44,6 +44,10 @@ compare their throughput/fairness trade-offs on a reproducible channel model.
   Highest cell throughput, starves cell-edge UEs.
 - **Proportional Fair (PF)** — serve the UE maximizing instantaneous-rate / average-rate.
   Balances throughput and fairness; the de-facto industry baseline.
+
+---
+
+![RAN MAC Scheduler Architecture Overview](overview.png)
 
 ---
 
